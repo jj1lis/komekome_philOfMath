@@ -1,0 +1,20 @@
+\documentclass[uplatex,a4paper,dvipdfmx,aspectratio=43,10pt]{beamer}
+
+\input{slidesettings.tex}
+\begin{document}
+\tikzset{cross/.style={preaction={-,draw=white,line width=4pt}}}
+\begin{tikzpicture}[>=stealth]
+    \fill[blue, opacity=0.2] (0, 0) rectangle (2, -2.5);
+    \node[anchor=north west, inner sep=2pt] at (0, 0) {\footnotesize$\Dcal$};
+    % \fill[black, opacity=0.2] (1, 0) rectangle (2, -2.5);
+    % \node[anchor=north west, inner sep=2pt] at (1, 0) {\footnotesize$\Ccal$};
+    % \draw[blue]  (1, 0) node[below left] {\scriptsize$F$} -- (1, -0.75) -- (1, -1.75) node[left] {\scriptsize$F$} -- (1, -2.5);
+    \draw[black] (2, 0) node[below left] {\scriptsize$Fb$} -- (2, -0.75) node[fill=white, draw=black] {$1_{Fb}$}
+            -- (2, -1.25) node[left]{\scriptsize$Fb$} -- (2, -1.75) node[fill=white, draw=black] {$Ff$} -- (2, -2.5) node[above left] {\scriptsize$Fa$};
+
+    % \draw[fill=white] (0.7, -0.45) rectangle (2.3, -1.05) node[midway] {$1_{Fb}$};
+
+    % \draw[dashed] (0.5, -0.4) rectangle (2.5, -1.1);
+    % \draw[dashed] (0.5, -1.4) rectangle (2.5, -2.1);
+\end{tikzpicture}
+\end{document}
