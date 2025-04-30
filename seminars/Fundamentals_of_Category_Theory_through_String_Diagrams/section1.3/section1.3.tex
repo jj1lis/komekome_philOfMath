@@ -25,9 +25,9 @@
             \item $\alpha$は各$a \in \Ccal$で添字付けられた射の集まり
                 $\left\{
                     % \vcenter{\hbox{
-                            \begin{tikzcd}[cramped]
-                                Fa \arrow[r, "\alpha_a"]& Ga
-                            \end{tikzcd}
+                    \begin{tikzcd}[cramped]
+                        Fa \arrow[r, "\alpha_a"]& Ga
+                    \end{tikzcd}
                     % }}
                 \right\}_{a \in \Ccal}$
             \item 任意の$a, b \in \Ccal$と$f \colon a \to b$に対して$Gf \circ \alpha_a = \alpha_b \circ Ff$（\alert{自然性}, naturality）
@@ -46,9 +46,9 @@
             \item $\alpha$は各$a \in \Ccal$で添字付けられた射の集まり
                 $\left\{
                     % \vcenter{\hbox{
-                            \begin{tikzcd}[cramped]
-                                Fa \arrow[r, "\alpha_a"]& Ga
-                            \end{tikzcd}
+                    \begin{tikzcd}[cramped]
+                        Fa \arrow[r, "\alpha_a"]& Ga
+                    \end{tikzcd}
                     % }}
                 \right\}_{a \in \Ccal}$
                 \begin{equation}
@@ -127,13 +127,13 @@
     % $\alpha \colon F \Rightarrow G$は自然変換
     \begin{itemize}
         \item 各$a \in \Ccal$に対して$Fa$の恒等射$1_{Fa}$を集めると，
-                $1_F := \left\{
-                    % \vcenter{\hbox{
-                            \begin{tikzcd}[cramped]
-                                Fa \arrow[r, "1_{Fa}"]& Fa
-                            \end{tikzcd}
-                    % }}
-                \right\}_{a \in \Ccal}$
+            $1_F := \left\{
+                % \vcenter{\hbox{
+                \begin{tikzcd}[cramped]
+                    Fa \arrow[r, "1_{Fa}"]& Fa
+                \end{tikzcd}
+                % }}
+            \right\}_{a \in \Ccal}$
             は$F$の\alert{恒等自然変換}
             \begin{itemize}
                 \item 実際，以下の通り各$a \in \Ccal$について自然性の条件を満たす
@@ -148,8 +148,59 @@
 \begin{frame}[fragile]{1.3.1 自然変換の定義}
     \begin{align*}
         \vcenterinput{figure10.tex} \ &= \ \vcenterinput{figure10-1.tex} \\ 
-                                      &= \ \vcenterinput{figure09-1.tex} \\ 
+                                      &= \ \vcenterinput{figure09-1.tex}\ \left(=\ \vcenterinput{figure09.tex} \right) \\ 
                                       &= \ \vcenterinput{figure11-1.tex}\ = \ \vcenterinput{figure11.tex}
     \end{align*}
+\end{frame}
+
+\begin{frame}[fragile]{1.3.2 自然変換の対象への作用と射への作用}
+    $\Ccal, \Dcal$は圏，
+    $F, G \colon \Ccal \to \Dcal$は関手，
+    $\alpha \colon F \Rightarrow G$は自然変換
+    \begin{itemize}
+        \item $\alpha = \qty{\alpha_a}_{a \in \Ccal}$を，$\Ccal$の対象と射への作用と見なせる
+    \end{itemize}
+    \begin{description}
+        \item[対象への作用:] $\Ccal$の対象を対応する$\alpha$の成分に写す
+    \end{description}
+    \begin{equation*}
+        \begin{array}{cccl}
+            \ob \Ccal & \to & \Dcal(Fa, Ga) & \subseteq \mor \Dcal \\
+            a & \mapsto & \alpha_a
+        \end{array}
+    \end{equation*}
+    \begin{description}
+        \item[射への作用:] $\alpha$と射$f$を「横に並べる」
+    \end{description}
+    \begin{equation*}
+        \begin{array}{rcccl}
+            \mor \Ccal \supseteq & \Ccal(a, b)  & \to       & \Dcal(Fa, Gb) & \subseteq \mor \Dcal \\
+                                 & f            & \mapsto   & \alpha \bullet f
+        \end{array}
+    \end{equation*}
+\end{frame}
+
+\begin{frame}[fragile]{1.3.2 自然変換の対象への作用と射への作用}
+    $\Ccal, \Dcal$は圏，
+    $F, G \colon \Ccal \to \Dcal$は関手，
+    $\alpha \colon F \Rightarrow G$は自然変換
+    \begin{description}
+        \item[射への作用:] $\alpha$と射$f$を「横に並べる」
+    \end{description}
+    \begin{equation*}
+        \begin{array}{rcccl}
+            \mor \Ccal \supseteq & \Ccal(a, b)  & \to       & \Dcal(Fa, Gb) & \subseteq \mor \Dcal \\
+                                 & f            & \mapsto   & \alpha \bullet f
+        \end{array}
+    \end{equation*}
+    \begin{block}{$\alpha \bullet f$の定義}
+        \begin{equation*}
+            \begin{array}{ccccc}
+                \alpha \bullet f & := & Gf \circ \alpha_a & = & \alpha_b \circ Ff \\
+                                 & & \rotatebox{90}{$\leftrightarrows$} \\
+                \vcenterinput{figure12.tex} & := &  \vcenterinput{figure04.tex} & = & \vcenterinput{figure05.tex}
+            \end{array}
+        \end{equation*}
+    \end{block}
 \end{frame}
 \end{document}
