@@ -202,5 +202,118 @@
             \end{array}
         \end{equation*}
     \end{block}
+    \begin{itemize}
+        \item 右の等号は単に自然性の条件
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{1.3.2 自然変換の対象への作用と射への作用}
+    $\Ccal, \Dcal$は圏，
+    $F, G \colon \Ccal \to \Dcal$は関手，
+    $\alpha \colon F \Rightarrow G$は自然変換
+    \begin{description}[対象への作用:]
+        \item[対象への作用:] $a \mapsto \alpha_a$
+        \item[射への作用:] $f \mapsto \alpha \bullet f := Gf \circ \alpha_a = \alpha_b \circ Ff$
+    \end{description}
+    % \vspace{1em}
+
+    \begin{itemize}
+        \item 自然変換$\alpha$は各$a \in \Ccal$に対する要素の集まり$\qty{\alpha_a}_{a \in \Ccal}$
+            \begin{itemize}
+                \item 対象への作用が定まれば，そこから自然変換を一意に得られる
+            \end{itemize}
+        \item よって射への作用は冗長な情報とも言える
+        \item 自然変換の射への作用は，関手のそれと対応するものと考えてもよい
+    \end{itemize}
+
+    % \begin{columns}
+    %     \begin{column}{0.3\textwidth}
+            \begin{equation*}
+                \begin{tikzcd}[sep=large]
+                    \Ccal \arrow[r, bend left=45, "F"] \arrow[r, bend left=40, phantom, ""' name=F1] \arrow[r, bend right=45, "G"'] \arrow[r, bend right=40, phantom, "" name=F2] \arrow[Rightarrow, from=F1, to=F2, "\alpha"] & \Dcal
+                \end{tikzcd}
+            \end{equation*}
+        % \end{column}
+        % \begin{column}{0.7\textwidth}
+            \begin{table}[H]
+                \centering
+                \begin{tabular}{ccc}
+                    \hline
+                    入力                  & $F$の出力                 & $\alpha$の出力                          \\ \hline
+                    % $a \in \Ccal$       & $Fa \in \Dcal$         & $\alpha_a \in \Dcal(Fa, Ga)$         \\
+                    $a \in \Ccal$       & $Fa \in \Dcal$         & \begin{tikzcd} Fa \arrow[r, "\alpha_a"] & Ga \end{tikzcd}         \\
+                    % $f \in \Ccal(a, b)$ & $Ff \in \Dcal(Fa, Fb)$ & $\alpha \bullet f \in \Dcal(Fa, Gb)$ \\ \hline
+                    \begin{tikzcd} \phantom{F}a \arrow[r, "f"] & b\phantom{G} \end{tikzcd} & \begin{tikzcd} Fa \arrow[r, "Ff"] & Fb \end{tikzcd} & \begin{tikzcd} Fa \arrow[r, "\alpha \bullet f"] & Gb \end{tikzcd} \\ \hline
+                \end{tabular}
+                % \caption{対応}
+                \label{tab:functor_nt_output}
+            \end{table}
+    %     \end{column}
+    % \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{1.3.3 自然変換の例}
+    \fbox{例1.49} 任意の対象は関手とみなせる：各$a \in \Dcal$に対して$\Delta_{\onebf}a \colon \onebf \to \Dcal;\, * \mapsto a$
+    \begin{exampleblock}{\fbox{例1.72} 任意の射は自然変換とみなせる}
+        $a, b \in \Dcal$をともに関手$\onebf \to \Dcal$とみる．
+
+        任意の射$f \in \Dcal(a, b)$に対して，$\qty{f}_{* \in \onebf}$は自然変換$a \Rightarrow b$である．
+    \end{exampleblock}
+
+    \begin{equation*}
+        \vcenterinput{figure13.tex} \ := \left\{\, \vcenterinput{figure14.tex} \,\right\}_{* \in \onebf}
+    \end{equation*}
+    以下のことに注意
+    \begin{itemize}
+        \item 対象$a$と$b$は，関手$\Delta_{\onebf}a, \Delta_{\onebf}b \colon \onebf \to \Dcal$と同一視されている
+        \item 厳密には$f$でなく集合$\qty{f}$が自然変換である
+            \begin{itemize}
+                \item とはいえ$\qty{f}$はただ1つの元$f$しか持たないので，こちらも同一視できる
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{1.3.3 自然変換の例}
+    % \begin{tikzcd}[sep=large]
+    %     \Ccal \arrow[r, bend left=30, "F"] \arrow[r, bend left=25, phantom, ""' name=F1] \arrow[r, bend right=30, "G"'] \arrow[r, bend right=25, phantom, "" name=F2] \arrow[Rightarrow, from=F1, to=F2, "\alpha"] & \Dcal
+    % \end{tikzcd}で, $\Ccal$は離散圏
+    $\Ccal$は離散圏，$\Dcal$は一般の圏
+    \begin{exampleblock}{\fbox{例1.73} 任意の射の集まりは自然変換とみなせる}
+        各$c \in \Ccal$に対して$\Dcal$の対象$a_c, b_c \in \Dcal$を任意に選び，射の集まり$\alpha := \left\{ \begin{tikzcd}[cramped] a_c \arrow[r, "\alpha_c"] & b_c \end{tikzcd}\right\}$も任意に選ぶ．
+
+        このとき関手$F, G \colon \Ccal \to \Dcal$が
+        \begin{align*}
+            Fc := a_c, \quad Gc := b_c
+        \end{align*}
+        で一意に定まり，$\alpha$は自然変換$F \Rightarrow G$となる．
+    \end{exampleblock}
+    自然性の確認：
+    \begin{enumerate}
+        \item $\Ccal$の射は各$c \in \Ccal$の恒等射$1_c$のみ
+        \item 各$1_c$に対して，$G 1_c \circ \alpha_c = \alpha_{c} \circ F 1_{c}$が成立
+            \begin{equation*}
+                G 1_c \circ \alpha_c = 1_{Gc} \circ \alpha_c = \alpha_c = \alpha_c \circ 1_{Fc} = \alpha_c \circ F 1_c
+            \end{equation*}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{1.3.3 自然変換の例}
+    % \begin{tikzcd}[sep=large]
+    %     \Ccal \arrow[r, bend left=30, "F"] \arrow[r, bend left=25, phantom, ""' name=F1] \arrow[r, bend right=30, "G"'] \arrow[r, bend right=25, phantom, "" name=F2] \arrow[Rightarrow, from=F1, to=F2, "\alpha"] & \Dcal
+    % \end{tikzcd}で, $\Ccal$は離散圏
+    % $\Ccal$は離散圏，$\Dcal$は一般の圏
+    \fbox{例1.65} 双関手$F \colon \Ccal \times \Dcal \to \Ecal$と対象$c \in \Ccal$に対し，$F(c, -) \colon \Dcal \to \Ecal$を
+    \begin{equation*}
+        \begin{array}{rcccl}
+            \ob \Dcal \ni & d & \mapsto & F(c, d) & \in \ob \Ecal \rlap{,} \\
+            \mor \Dcal \ni & g & \mapsto & F(1_c, g) & \in \mor \Ecal
+        \end{array}
+    \end{equation*}
+    と定めれば$F(c, -)$は関手
+    \begin{exampleblock}{\fbox{例1.75}}
+        $\Ccal$の任意の射\begin{tikzcd} c \arrow[r, "f"] & c' \end{tikzcd}に対して，射の集まり$F(f, -) := \qty{F(f, 1_d)}_{d \in \Dcal}$は
+
+        自然変換$F(c, -) \Rightarrow F(c', -)$である．
+    \end{exampleblock}
 \end{frame}
 \end{document}
