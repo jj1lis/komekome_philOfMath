@@ -1,0 +1,486 @@
+\documentclass[uplatex,a4paper,dvipdfmx,aspectratio=169,10pt]{beamer}
+
+\input{slidesettings.tex}
+
+\title{『ストリング図で学ぶ圏論の基礎』勉強会}
+\subtitle{\S 2.3 関手圏}
+\author{山田鈴太}
+\institute[電通大院 M1]{電気通信大学大学院情報理工学研究科 博士前期課程1年}
+\date{}
+
+\renewcommand{\thefootnote}{*\arabic{footnote}}
+\renewcommand{\theenumi}{(\arabic{enumi})}
+
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}[fragile]{2.3.1 関手圏の定義}
+    \begin{itemize}
+        \item 圏：対象とその間の射の集まり
+    \end{itemize}
+    \begin{center}
+        \input{figures/category.tex}
+    \end{center}
+    \begin{itemize}
+        \item 自然変換：関手から関手への矢印
+    \end{itemize}
+    \begin{equation*}
+        \begin{tikzcd}[sep=huge]
+            \Ccal \arrow[r, bend left=35, "F"] \arrow[r, bend left=30, phantom, ""' name=F1] \arrow[r, bend right=35, "G"'] \arrow[r, bend right=30, phantom, "" name=F2] \arrow[Rightarrow, from=F1, to=F2, "\alpha"] & \Dcal
+        \end{tikzcd}
+    \end{equation*}
+    \begin{itemize}
+        \item 関手を対象，自然変換を射とする圏が作れるのでは？
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{2.3.1 関手圏の定義}
+    % $F, G \colon \Ccal \to \Dcal$は関手
+    \begin{block}{関手圏}
+        $\Ccal, \Dcal$を圏とする．
+
+        次の通り定義される圏を$\Ccal$から$\Dcal$への\alert{関手圏}といい，$\Dcal^\Ccal$で表す．
+        \begin{itemize}
+            \item 対象は各関手$\Ccal \to \Dcal$
+            \item 対象$F, G \colon \Ccal \to \Dcal$に対して，$F$から$G$への射は各自然変換$\alpha \colon F \Rightarrow G$
+            \item 各射 \begin{tikzcd}[cramped] F \arrow[r, "\alpha"] & G \arrow[r, "\beta"] & H \end{tikzcd} に対して，その合成$\beta \alpha$は自然変換の垂直合成
+            \item 各対象$F$について，その恒等射は恒等自然変換$1_F$
+        \end{itemize}
+    \end{block}
+    \begin{equation*}
+        \underbrace{\vcenterinput{figures/figure02.tex}}_{\text{圏$\Dcal^\Ccal$の射$\alpha\colon F \to G$}}\ 
+            =\ \underbrace{\vcenterinput{figures/figure01.tex}}_{\text{関手$\Ccal \to \Dcal$の間の自然変換$\alpha \colon F \Rightarrow G$}}
+    \end{equation*}
+\end{frame}
+
+\begin{frame}[fragile]{2.3.1 関手圏の定義}
+    \begin{exampleblock}{演習問題2.3.1}
+        関手圏が圏であることを示せ．
+    \end{exampleblock}
+    \fbox{証明}\\
+    $\Ccal, \Dcal$を任意の圏として，$\Dcal^\Ccal$が圏の性質を満たすことを確認する．
+    \begin{description}[射の合成の結合律:]
+        \item[射の合成の閉性:] 任意の自然変換\begin{tikzcd} F \arrow[r, Rightarrow, "\alpha"] & G \arrow[r, Rightarrow, "\beta"] & H \end{tikzcd}に対して，\\
+            垂直合成$\beta \alpha$は再び自然変換$F \Rightarrow H$である (cf. \S 2.1.1)．
+        \item[射の合成の結合律:] 任意の自然変換\begin{tikzcd} F \arrow[r, Rightarrow, "\alpha"] & G \arrow[r, Rightarrow, "\beta"] & H \arrow[r, Rightarrow, "\gamma"] & I \end{tikzcd}に対して，\\
+            結合律が次の通り成り立つ:
+    \end{description}
+    \begin{align*}
+        \gamma(\beta\alpha) &= \qty{\gamma_a (\beta_a \alpha_a)}_{a \in \Ccal} \\
+                            &= \qty{(\gamma_a\beta_a) \alpha_a}_{a \in \Ccal} \\
+                            &= (\gamma \beta) \alpha.
+    \end{align*}
+\end{frame}
+\begin{frame}[fragile]{2.3.1 関手圏の定義}
+    \begin{exampleblock}{演習問題2.3.1}
+        関手圏が圏であることを示せ．
+    \end{exampleblock}
+    \begin{description}
+        \item[恒等射の性質:] 任意の自然変換\begin{tikzcd}F \arrow[r, Rightarrow, "\alpha"] & G\end{tikzcd}に対して，$\alpha 1_F = \alpha = 1_G \alpha$が成り立つ (cf. \S 2.1.1)．
+    \end{description}
+    したがって$\Dcal^\Ccal$は圏である．\qed
+\end{frame}
+
+
+\begin{frame}[fragile]{2.3.1 関手圏の定義}
+    % $\Ccal, \Dcal$は圏，$F, G \colon \Ccal \to \Dcal$は関手
+    % \begin{itemize}
+    射$\alpha \in \Dcal^\Ccal(F, G)$が同型射\ $\Longleftrightarrow$\ 自然変換$\alpha$が自然同型
+    % \end{itemize}
+    \begin{description}
+        \item[($\Rightarrow$)] 
+            \begin{itemize}
+                \item $\alpha$が同型射なら，逆射$\alpha^{-1} \colon G \to F$が存在して$\alpha^{-1} \circ \alpha = 1_F$
+                \item 各$a \in \Ccal$について$\alpha^{-1}_a \circ \alpha_a = 1_{Fa}$
+                    \begin{itemize}
+                        \item $\alpha_a \circ \alpha^{-1}_a = 1_{Ga}$も同様
+                    \end{itemize}
+                \item したがって各$a \in \Ccal$について$\alpha_a$が同型射 $\define$ $\alpha$は自然同型
+            \end{itemize}
+        \item[($\Leftarrow$)]
+            \begin{itemize}
+                \item $\alpha$が自然同型なら，各$a \in \Ccal$について$\alpha_a$が同型射
+                \item 逆射$\alpha^{-1}_a$を集めて自然変換$\alpha^{-1} = \qty{\alpha^{-1}_a}_{a \in \Ccal}$を構成
+                \item $\alpha^{-1} \circ \alpha = 1_F$と$\alpha \circ \alpha^{-1} = 1_G$が成り立つ（$\Rightarrow$と同じ議論）
+                \item よって$\alpha$は同型射
+            \end{itemize}
+    \end{description}
+\end{frame}
+
+\begin{frame}[fragile]{2.3.1 関手圏の定義}
+    $\Ccal, \Dcal$が局所小圏であっても，$\Dcal^\Ccal$も局所小圏とは限らない．
+    \begin{exampleblock}{演習問題2.3.2}
+        \begin{enumerate}[(a)]
+            \item 圏$\Cat$は局所小圏であることを示せ．
+            \item 小圏$\Ccal$と局所小圏$\Dcal$について関手圏$\Dcal^\Ccal$は局所小圏であることを示せ．
+            \item $\Ccal, \Dcal$が共に局所小圏であるとき，関手圏$\Dcal^\Ccal$が必ずしも局所小圏でないことを示せ．
+        \end{enumerate}
+    \end{exampleblock}
+    \begin{enumerate}[(a)]
+        \item いま$\Ccal, \Dcal \in \Cat$を固定して，$\Cat(\Ccal, \Dcal)$が集合であるか考える．
+            各射$F \in \Cat(\Ccal, \Dcal)$は関手$\Ccal \to \Dcal$であり，関手は
+            \begin{itemize}
+                \item 対象への作用$\ob \Ccal \to \ob \Dcal$
+                \item 射への作用$\mor \Ccal \to \mor \Dcal$
+            \end{itemize}
+            から成る．$\Ccal, \Dcal$は小圏だから，$\ob \Ccal, \mor \Ccal$ (resp. $\Dcal$) は集合．
+            したがって$\ob \Dcal^{\ob \Ccal} \times \mor \Dcal^{\mor \Ccal}$とでも書くべき作用の組全体も集合をなすので，
+            その部分クラスである$\Cat(\Ccal, \Dcal)$も集合である．
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{2.3.1 関手圏の定義}
+    \begin{exampleblock}{演習問題2.3.2}
+        \begin{enumerate}[(a)]
+            \item 圏$\Cat$は局所小圏であることを示せ．
+            \item 小圏$\Ccal$と局所小圏$\Dcal$について関手圏$\Dcal^\Ccal$は局所小圏であることを示せ．
+            \item $\Ccal, \Dcal$が共に局所小圏であるとき，関手圏$\Dcal^\Ccal$が必ずしも局所小圏でないことを示せ．
+        \end{enumerate}
+    \end{exampleblock}
+    \begin{enumerate}[(a)]
+        \setcounter{enumi}{1}
+        \item 各対象$F, G$に対して，$\Dcal^\Ccal(F, G)$が集合であるか考える．
+            各射$\alpha \in \Dcal^\Ccal(F, G)$は自然変換$F \Rightarrow G$であり，自然変換は対象への作用$\ob \Ccal \to \mor \Dcal$のみから決定されることを思い出す(cf. \S 1.3.2)．
+            条件より$\ob \Ccal, \mor \Dcal$は共に集合であるから，対象への作用全体も集合をなし，その部分クラスである$\Dcal^\Ccal(F, G)$も集合となる．
+        \item $\Ccal$が単に局所小である場合，$\ob \Ccal$は集合であるとは限らないので，上の議論が成り立たない．
+
+            （具体的な反例は次ページ）
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{2.3.1 関手圏の定義}
+    \begin{exampleblock}{演習問題2.3.2}
+        \begin{enumerate}[(c)]
+            \item $\Ccal, \Dcal$が共に局所小圏であるとき，関手圏$\Dcal^\Ccal$が必ずしも局所小圏でないことを示せ．
+        \end{enumerate}
+    \end{exampleblock}
+    \begin{itemize}
+        \item 記号を次のように定める
+            \begin{itemize}
+                \item $\DSet$ : 全ての集合を対象とする離散圏
+                \item $\onebb$ : 1元集合$\qty{*}$
+                \item $\twobb$ : 2元集合$\qty{0, 1}$
+                \item $F\colon \DSet \to \CSet$ : $\DSet$の各対象を$\onebb$に，各射を$1_\onebb$に写す関手
+                \item $G\colon \DSet \to \CSet$ : $\DSet$の各対象を$\twobb$に，各射を$1_\twobb$に写す関手
+            \end{itemize}
+        \item 自然変換$\alpha\colon F \Rightarrow G$は$\CSet$の射（つまり写像）の族$\qty{\alpha_X \colon \onebb \to \twobb}_{X \in \DSet}$
+        \item 各$\alpha_X$は行き先を$0$にするか$1$にするかの選択
+            \begin{itemize}
+                \item $\alpha$ごとに集合族$P_\alpha := \Set{ X \in \DSet | \alpha_X(*) = 1}$がある
+            \end{itemize}
+        \item 自然変換$F \Rightarrow G$全体$\CSet^\DSet(F, G)$のサイズは「集合全体のクラスの羃クラス」に等しい
+        \item これは集合でないので，$\CSet^\DSet$は局所小にならない$\leftarrow$反例！
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{2.3.1 関手圏の定義}
+    $\Ccal$: 圏
+    \begin{exampleblock}{\fbox{例2.23} 関手圏$\Ccal^\onebf$}
+        関手圏$\Ccal^\onebf$の対象および射は，それぞれ圏$\Ccal$の対象および射と同一視できる．
+    \end{exampleblock}
+    \fbox{例1.49} 任意の対象は関手とみなせる：各$a \in \Ccal$に対して$\Delta_{\onebf}a \colon \onebf \to \Ccal;\, * \mapsto a$
+
+    \fbox{例1.72} 任意の射は自然変換とみなせる：各$f \in \Ccal(a, b)$に対して$\qty{f}_{* \in \onebb} \colon a \Rightarrow b$
+
+    \begin{itemize}
+        \item $\Ccal^\onebf$の対象は関手$\Delta_{\onebf}a$
+            \begin{itemize}
+                \item $a \in \Ccal$と同一視
+            \end{itemize}
+        \item $\Ccal^\onebf$の射は自然変換$\qty{f}_{* \in \onebf}\colon a \Rightarrow b$
+            \begin{itemize}
+                \item $f \colon a \to b$と同一視
+            \end{itemize}
+    \end{itemize}
+    したがって関手$F \colon \Ccal^\onebf \to \Ccal; \Delta_{\onebf}a \mapsto a$ によって同型$\Ccal^\onebf \cong \Ccal$を得る．
+\end{frame}
+
+\begin{frame}[fragile]{2.3.1 関手圏の定義}
+    $\Ccal$: 圏
+    \begin{exampleblock}{\fbox{例2.24} 関手圏$\Ccal^\twobf$}
+        関手圏$\Ccal^\twobf$の対象は，圏$\Ccal$の射と同一視できる．$\Ccal^\twobf$を\structure{射圏} (arrow category) とも呼ぶ．
+    \end{exampleblock}
+    \begin{equation*}
+        \twobf := \quad \begin{tikzcd}
+            1 \arrow[loop left, "1_1"] \arrow[r, "!"] & 2 \arrow[loop right, "1_2"]
+        \end{tikzcd}
+    \end{equation*}
+    \begin{itemize}
+        \item $\Ccal^\twobf$の対象$F$は関手$\twobf \to \Ccal$
+        \item $F$は射$! \in \mor \twobf$の行き先$F! \in \mor \Ccal$のみによって決まる
+            \begin{itemize}
+                \item $F! := f$と決めたなら，$F1 := \dom f,\, F2 := \cod f$とせざるを得ない
+            \end{itemize}
+        \item 逆に任意の射$f \in \mor \Ccal$に対して，$F! = f$となる関手$F$を1つだけ作れる
+        \item よって$\Ccal^\twobf$の対象は$\Ccal$の射と一対一に対応している
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{2.3.1 関手圏の定義}
+    \begin{exampleblock}{\fbox{例2.24} 関手圏$\Ccal^\twobf$}
+        関手圏$\Ccal^\twobf$の対象は，圏$\Ccal$の射と同一視できる．$\Ccal^\twobf$を射圏 (arrow category) とも呼ぶ．
+    \end{exampleblock}
+    \begin{itemize}
+        \item $F, G \colon \twobf \to \Ccal$に対して$f := F!, g := G!$とする
+        \item $\Ccal^\twobf$の射$\alpha \in \Ccal^\twobf(F, G)$は自然変換$F \Rightarrow G$
+            \begin{itemize}
+                \item $g \alpha_1 = \alpha_2 f$を満たす各射$\alpha_1 \colon F1 \to G1,\, \alpha_2 \colon F2 \to G2$から自然変換$\alpha = \qty{\alpha_1, \alpha_2}$を作れる
+            \end{itemize}
+    \end{itemize}
+    \begin{gather*}
+        \vcenterinput{figures/figure03.tex} \ = \ \vcenterinput{figures/figure04.tex}
+    \end{gather*}
+\end{frame}
+
+\begin{frame}[fragile]{2.3.2 関手圏に関する関手の例}
+    $\Ccal, \Dcal, \Ecal$: 圏
+
+    % 関手圏から関手圏への関手として「関手$F$を前から水平合成する」「関手$F$を後ろから水平合成する」という操作を考える．
+    \begin{exampleblock}{\fbox{例2.25} 関手を前から施す関手}
+        関手$F \colon \Ccal \to \Dcal$に対して，関手$- \bullet F \colon \Ecal^\Dcal \to \Ecal^\Ccal$を次で定義する．
+        \begin{description}[対象への作用:]
+            \item[対象への作用:]
+                \begin{equation*}
+                    \begin{array}{ccc}
+                        \ob \Ecal^\Dcal & \to & \ob \Ecal^\Ccal  \\
+                        % G \colon \Dcal \to \Ecal & \mapsto & G \bullet F \colon \Ccal \to \Ecal.
+                        \underbrace{G}_{\Dcal \to \Ecal} & \mapsto & \underbrace{G \bullet F}_{\Ccal \to \Ecal}.
+                    \end{array}
+                \end{equation*}
+            \item[射への作用:] 各対象（すなわち関手）$G, H \in \Ecal^\Dcal$について，
+                \begin{equation*}
+                    \begin{array}{ccc}
+                        \Ecal^\Dcal(G, H) & \to & \Ecal^\Ccal(G \bullet F, H \bullet F)  \\
+                        % \alpha \colon G \Rightarrow H & \mapsto & \alpha \bullet F \colon G \bullet F \Rightarrow H \bullet F.
+                        \underbrace{\alpha}_{G \Rightarrow H} & \mapsto & \underbrace{\alpha \bullet F}_{G \bullet F \Rightarrow H \bullet F}.
+                    \end{array}
+                \end{equation*}
+        \end{description}
+    \end{exampleblock}
+    $\alpha \bullet F := \alpha \bullet 1_F = \qty{\alpha \bullet 1_{Fa}}_{a \in \Ccal}$に注意
+\end{frame}
+
+\begin{frame}[fragile]{2.3.2 関手圏に関する関手の例}
+    $\Ccal, \Dcal, \Ecal$: 圏，$F$: 関手$\Ccal \to \Dcal$
+
+    % 関手圏から関手圏への関手として「関手$F$を前から水平合成する」「関手$F$を後ろから水平合成する」という操作を考える．
+    \begin{exampleblock}{\fbox{例2.25} 関手を前から施す関手}
+        \begin{equation*}
+            \begin{array}{ccc}
+                \Ecal^\Dcal(G, H) & \to & \Ecal^\Ccal(G \bullet F, H \bullet F)  \\
+                        % \alpha \colon G \Rightarrow H & \mapsto & \alpha \bullet F \colon G \bullet F \Rightarrow H \bullet F.
+                \underbrace{\alpha}_{G \Rightarrow H} & \mapsto & \underbrace{\alpha \bullet F}_{G \bullet F \Rightarrow H \bullet F}.
+            \end{array}
+        \end{equation*}
+    \end{exampleblock}
+    \begin{equation*}
+        \vcenterinput{figures/figure05.tex} \xmapsto{- \bullet F} \vcenterinput{figures/figure06.tex} = \vcenterinput{figures/figure07.tex}\tag{2.26}
+    \end{equation*}
+\end{frame}
+
+\begin{frame}[fragile]{2.3.2 関手圏に関する関手の例}
+    $\Ccal, \Dcal, \Ecal$: 圏，$F$: 関手$\Ccal \to \Dcal$
+
+    % 関手圏から関手圏への関手として「関手$F$を前から水平合成する」「関手$F$を後ろから水平合成する」という操作を考える．
+    \begin{exampleblock}{演習問題2.3.5（前半）}
+        例2.25で定めた写像$- \bullet F \colon \Ecal^\Dcal \to \Ecal^\Ccal$が関手であることを示せ．
+    \end{exampleblock}
+    \fbox{証明}
+
+    $\Ecal^\Dcal$の射（すなわち自然変換）\begin{tikzcd}[cramped] G \arrow[r, Rightarrow, "\alpha"] & H \arrow[r, Rightarrow, "\beta"] & I \end{tikzcd} を任意に取って，関手の公理
+    \begin{equation*}
+        (\beta \alpha) \bullet F = (\beta \bullet F) \circ (\alpha \bullet F)
+    \end{equation*}
+    を満たすことを次の通り確認できる:
+    \begin{align*}
+        (\beta \alpha) \bullet F &:= (\beta \circ \alpha) \bullet 1_F \\
+                                 &= (\beta \circ \alpha) \bullet (1_F \circ 1_F) \\
+                                 &= (\beta \bullet 1_F) \circ (\alpha \bullet 1_F) \tag{$\because$ 命題2.9}\\
+                                 &=: (\beta \bullet F) \circ (\alpha \bullet F).
+    \end{align*}
+    したがって$- \bullet F$は関手である．\qed
+\end{frame}
+
+\begin{frame}[fragile]{2.3.2 関手圏に関する関手の例}
+    $\Ccal, \Dcal, \Ecal$: 圏，$F, G$: 関手$\Ccal \to \Dcal$
+    \begin{exampleblock}{\fbox{例2.25} 関手を前から施す関手}
+        同様に自然変換$\gamma \colon F \Rightarrow G$に対して，自然変換$- \bullet \gamma \colon (- \bullet F) \Rightarrow (- \bullet G)$が定義できる．
+        \begin{description}[対象への作用:]
+            \item[対象への作用:]
+                \begin{equation*}
+                    \begin{array}{ccc}
+                        \ob \Ecal^\Dcal & \to & \mor \Ecal^{\Ccal}  \\
+                        % G \colon \Dcal \to \Ecal & \mapsto & G \bullet F \colon \Ccal \to \Ecal.
+                        \underbrace{H}_{\Dcal \to \Ecal} & \mapsto & \underbrace{H \bullet \gamma}_{(H \bullet F) \to (H \bullet G)}.
+                    \end{array}
+                \end{equation*}
+            \item[射への作用:] 各対象（すなわち関手）$H, I \in \Ecal^\Dcal$に対して，
+                \begin{equation*}
+                    \begin{array}{ccc}
+                        \Ecal^\Dcal(H, I)& \to & \Ecal^\Ccal(H \bullet \gamma, I \bullet \gamma)  \\
+                        % G \colon \Dcal \to \Ecal & \mapsto & G \bullet F \colon \Ccal \to \Ecal.
+                        \underbrace{\alpha}_{H \Rightarrow I} & \mapsto & \underbrace{\alpha \bullet \gamma}_{(H \bullet \gamma) \Rightarrow (I \bullet \gamma)}.
+                    \end{array}
+                \end{equation*}
+        \end{description}
+    \end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]{2.3.2 関手圏に関する関手の例}
+    $\Ccal, \Dcal, \Ecal$: 圏，$F, G$: 関手$\Ccal \to \Dcal$，$\gamma$: 自然変換$F \Rightarrow G$
+    \begin{exampleblock}{演習問題2.3.5（後半）}
+        例2.25で定めた写像$- \bullet \gamma \colon (- \bullet F) \Rightarrow (- \bullet G)$が自然変換であることを示せ．
+                \begin{equation*}
+                    \begin{array}{ccc}
+                        \ob \Ecal^\Dcal & \to & \mor \Ecal^{\Ccal}  \\
+                        % G \colon \Dcal \to \Ecal & \mapsto & G \bullet F \colon \Ccal \to \Ecal.
+                        \underbrace{H}_{\Dcal \to \Ecal} & \mapsto & \underbrace{H \bullet \gamma}_{(H \bullet F) \to (H \bullet G)}.
+                    \end{array}
+                \end{equation*}
+    \end{exampleblock}
+    \fbox{証明}
+
+    $\Ecal^\Dcal$の射（すなわち自然変換）\begin{tikzcd}[cramped] H \arrow[r, Rightarrow, "\alpha"] & I \end{tikzcd} を任意に取って，
+    自然性の条件
+    \begin{equation*}
+        (\alpha \bullet G) \circ (H \bullet \gamma) = (I \bullet \gamma) \circ (\alpha \bullet F)
+    \end{equation*}
+    を満たすことを示す．
+\end{frame}
+
+\begin{frame}[fragile]{2.3.2 関手圏に関する関手の例}
+    $\Ccal, \Dcal, \Ecal$: 圏，$F, G, H, I$: 関手$\Ccal \to \Dcal$，$\gamma$: 自然変換$F \Rightarrow G$，$\alpha$: 自然変換$H \Rightarrow I$
+    \begin{exampleblock}{演習問題2.3.5（後半）}
+        例2.25で定めた写像$- \bullet \gamma \colon (- \bullet F) \Rightarrow (- \bullet G)$が自然変換であることを示せ．
+    \end{exampleblock}
+    \begin{align*}
+        (\alpha \bullet G) \circ (H \bullet \gamma) &:= (\alpha \bullet 1_G) \circ (1_H \bullet \gamma) \\
+                                                     &= (\alpha \circ 1_H) \bullet (1_G \circ \gamma) \tag{$\because$命題2.9} \\
+                                                     &= (1_I \circ \alpha) \bullet (\gamma \circ 1_F) \\
+                                                     &= (1_I \bullet \gamma) \circ (\alpha \bullet 1_F) \tag{$\because$命題2.9} \\
+                                                     &=: (I \bullet \gamma) \circ (\alpha \bullet F).
+    \end{align*}
+    したがって，$- \bullet \gamma$は自然変換である．\qed
+\end{frame}
+
+\begin{frame}[fragile]{2.3.2 関手圏に関する関手の例}
+    $\Ccal, \Dcal, \Ecal$: 圏，$F, G$: 関手$\Ccal \to \Dcal$
+    \begin{exampleblock}{\fbox{例2.25} 関手を前から施す関手}
+        同様に自然変換$\gamma \colon F \Rightarrow G$に対して，自然変換$- \bullet \gamma \colon (- \bullet F) \Rightarrow (- \bullet G)$が定義できる．
+    \end{exampleblock}
+    自然変換$\theta \colon G \Rightarrow H$と$\tau \colon F' \Rightarrow G'$に対して
+    \begin{equation*}
+        \begin{aligned}
+            (- \bullet \theta) (- \bullet \gamma) &= - \bullet \theta\gamma, \\
+            (- \bullet \tau) \bullet (- \bullet \gamma) &= - \bullet (\tau \bullet \gamma)
+        \end{aligned}
+        \tag{2.27}
+    \end{equation*}
+    が成り立つ．
+\end{frame}
+
+\begin{frame}[fragile]{2.3.2 関手圏に関する関手の例}
+    $\Ccal, \Dcal, \Ecal$: 圏
+
+    当然，例2.25の逆も考えられる．
+    \begin{exampleblock}{\fbox{例2.28} 関手を後ろから施す関手}
+        関手$F \colon \Dcal \to \Ecal$に対して，関手$F \bullet - \colon \Dcal^\Ccal \to \Ecal^\Ccal$を次で定義する．
+        \begin{description}[対象への作用:]
+            \item[対象への作用:]
+                \begin{equation*}
+                    \begin{array}{ccc}
+                        \ob \Dcal^\Ccal & \to & \ob \Ecal^\Ccal  \\
+                        % G \colon \Dcal \to \Ecal & \mapsto & G \bullet F \colon \Ccal \to \Ecal.
+                        \underbrace{G}_{\Ccal \to \Dcal} & \mapsto & \underbrace{F \bullet G}_{\Ccal \to \Ecal}.
+                    \end{array}
+                \end{equation*}
+            \item[射への作用:] 各対象（すなわち関手）$G, H \in \Dcal^\Ccal$について，
+                \begin{equation*}
+                    \begin{array}{ccc}
+                        \Dcal^\Ccal(G, H) & \to & \Ecal^\Ccal(F \bullet G, F \bullet H)  \\
+                        % \alpha \colon G \Rightarrow H & \mapsto & \alpha \bullet F \colon G \bullet F \Rightarrow H \bullet F.
+                        \underbrace{\alpha}_{G \Rightarrow H} & \mapsto & \underbrace{F \bullet \alpha}_{F \bullet G \Rightarrow F \bullet H}.
+                    \end{array}
+                \end{equation*}
+        \end{description}
+    \end{exampleblock}
+\end{frame}
+\begin{frame}[fragile]{2.3.2 関手圏に関する関手の例}
+    $\Ccal, \Dcal, \Ecal$: 圏，$F, G$: 関手$\Dcal^\Ccal \to \Ecal^\Ccal$
+    \begin{exampleblock}{\fbox{例2.28} 関手を後ろから施す関手}
+        自然変換$\gamma \colon F \Rightarrow G$に対して，自然変換$\gamma \bullet - \colon (F \bullet -) \Rightarrow (G \bullet -)$が定義できる．
+        \begin{description}[対象への作用:]
+            \item[対象への作用:]
+                \begin{equation*}
+                    \begin{array}{ccc}
+                        \ob \Dcal^\Ccal & \to & \mor \Ecal^{\Ccal}  \\
+                        % G \colon \Dcal \to \Ecal & \mapsto & G \bullet F \colon \Ccal \to \Ecal.
+                        \underbrace{H}_{\Ccal \to \Dcal} & \mapsto & \underbrace{\gamma \bullet H}_{(F \bullet H) \to (G \bullet H)}.
+                    \end{array}
+                \end{equation*}
+            % \item[射への作用:] 各対象（すなわち関手）$H, I \in \Ecal^\Dcal$に対して，
+            %     \begin{equation*}
+            %         \begin{array}{ccc}
+            %             \Ecal^\Dcal(H, I)& \to & \Ecal^\Ccal(H \bullet \gamma, I \bullet \gamma)  \\
+            %             % G \colon \Dcal \to \Ecal & \mapsto & G \bullet F \colon \Ccal \to \Ecal.
+            %             \underbrace{\alpha}_{H \Rightarrow I} & \mapsto & \underbrace{\alpha \bullet \gamma}_{(H \bullet \gamma) \Rightarrow (I \bullet \gamma)}.
+            %         \end{array}
+            %     \end{equation*}
+        \end{description}
+    \end{exampleblock}
+    自然変換$\theta \colon G \Rightarrow H$と$\tau \colon F' \Rightarrow G'$に対して
+    \begin{equation*}
+        \begin{aligned}
+            (\theta \bullet -) (\gamma \bullet -) &= \theta\gamma \bullet -, \\
+            (\tau \bullet -) \bullet (\gamma \bullet -) &= (\tau \bullet \gamma) \bullet -
+        \end{aligned}
+        \tag{2.29}
+    \end{equation*}
+    が成り立つ．
+\end{frame}
+
+\begin{frame}[fragile]{2.3.2 関手圏に関する関手の例}
+    $\Ccal, \Dcal, \Ecal$: 圏
+
+    % 関手圏から関手圏への関手として「関手$F$を前から水平合成する」「関手$F$を後ろから水平合成する」という操作を考える．
+    \fbox{例2.25} 関手$F \colon \Ccal \to \Dcal$に対して，関手$- \bullet F \colon \Ecal^\Dcal \to \Ecal^\Ccal$を定義
+    \begin{exampleblock}{\fbox{例2.31} 評価関手}
+        例2.25で$\Ccal = \onebf$と取る．
+        \begin{itemize}
+            \item $F \colon \onebf \to \Dcal$は対象$d = F(*) \in \Dcal$と同一視できる (cf. 例1.49)
+            \item $\Ecal^\onebf$は$\Ecal$と同型 (cf. 例2.23)
+        \end{itemize}
+        この関手$- \bullet d \colon \Ecal^\Dcal \to \Ecal$を\structure{評価関手} (evaluation functor) と呼び，$\evf_d$でも表す．
+    \end{exampleblock}
+    すなわち，この$\evf_d$は次のような関手．
+        \begin{description}[対象への作用:]
+            \item[対象への作用:] 各対象（すなわち関手）$G \in \Ecal^\Dcal$を$G \bullet d = Gd \in \Ecal$に写す
+            \item[射への作用:] 各射（すなわち自然変換）\begin{tikzcd}[cramped] G \arrow[r, Rightarrow, "\alpha"] & H \end{tikzcd} を$\alpha \bullet d = \alpha_d \in \Ecal(Gd, Hd)$に写す．
+        \end{description}
+\end{frame}
+
+\begin{frame}[fragile]{2.3.2 関手圏に関する関手の例}
+    $\Ccal, \Dcal, \Ecal$: 圏
+
+    % 関手圏から関手圏への関手として「関手$F$を前から水平合成する」「関手$F$を後ろから水平合成する」という操作を考える．
+    \fbox{例2.25} 関手$F \colon \Ccal \to \Dcal$に対して，関手$- \bullet F \colon \Ecal^\Dcal \to \Ecal^\Ccal$を定義
+    \begin{exampleblock}{\fbox{例2.32} 対角関手}
+        今度は$\Ccal = \onebf$と取る．
+        \begin{itemize}
+            \item $F \colon \Ccal \to \onebf$は$\Ccal$の全ての対象を$\onebf$のただ1つの対象$* \in \onebf$へ写す
+                \begin{itemize}
+                    \item そもそも$\Ccal \to \onebf$の関手は1つしかないので$!$で表す．
+                \end{itemize}
+            \item $\Ecal^\onebf$は$\Ecal$と同型 (cf. 例2.23)
+        \end{itemize}
+        この関手$- \bullet {!} \colon \Ecal \to \Ecal^\Ccal$を\structure{対角関手} (diagnal functor) と呼び，$\Delta_\Ccal$でも表す．
+    \end{exampleblock}
+    すなわち，この$\Delta_\Ccal$は次のような関手．
+        \begin{description}[対象への作用:]
+            \item[対象への作用:] $\Ecal$の各対象$a$を関手$a \bullet {!} \in \Ecal^\Ccal$に写す
+            \item[射への作用:] $\Ecal$の各射\begin{tikzcd}a \arrow[r, "f"] & b\end{tikzcd}を自然変換$f \bullet {!} = \qty{f}_{c \in \Ccal} \in \Ecal^\Ccal(a \bullet {!}, b \bullet {!})$に写す．
+        \end{description}
+\end{frame}
+\end{document}

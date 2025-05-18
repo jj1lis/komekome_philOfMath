@@ -1,0 +1,26 @@
+\documentclass[uplatex,a4paper,dvipdfmx]{beamer}
+\input{slidesettings.tex}
+\begin{document}
+\begin{tikzpicture}[>=stealth, auto, node distance=2cm]
+    \draw[rounded corners=2pt] (0, 0) rectangle (5, 3);
+    \node[fill=white] at (1, 3) {$\Ccal$};
+
+    \node (p0) at (0.5, 2) {$\bullet$};
+    \node (p1) at (1, 0.5) {$\bullet$};
+    \node (p2) at (2, 1.8) {$\bullet$};
+    \node (p3) at (3, 1) {$\bullet$};
+    \node (p4) at (4, 2.5) {$\bullet$};
+    \node (p5) at (4.5, 0.7) {$\bullet$};
+
+    \draw[thick, ->] (p0) to [bend left] (p1);
+    \draw[thick, ->] (p0) to [bend right] (p1);
+    \draw[thick, ->] (p3) to [bend left] (p2);
+    \draw[thick, ->] (p2) to [bend left] (p3);
+    \draw[thick, ->] (p2) -- (p0);
+    \draw[thick, ->] (p2) -- (p4);
+    \draw[thick, ->] (p0) to [bend left] (p4);
+
+    \draw[dashed] (p4) -- (6, 2) node[right]{対象};
+    \draw[dashed] (3, 2) -- (6, 1) node[right]{射};
+\end{tikzpicture}
+\end{document}
